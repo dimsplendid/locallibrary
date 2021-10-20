@@ -38,6 +38,7 @@ from django.views import generic
 
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 10
     # context_object_name = (
     #     "my_book_list"  # your own name for the list as a template variable
     # )
