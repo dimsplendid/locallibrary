@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>{{author.__str__}}</h1>
+
+    <p>{{author.date_of_birth}}-{{author.date_of_death}}</p>
+    
+    <h2>Writings</h2>
+    
+    {% for book in author.book_set.all %}
+        <hr>
+        
