@@ -17,20 +17,21 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
 ]
 
 # Use include() to add paths from the catalog application
 from django.urls import include
 
 urlpatterns += [
-    path('catalog/', include('catalog.urls')),
+    path("catalog/", include("catalog.urls")),
 ]
 
-#Add URL maps to redirect the base URL to our application
+# Add URL maps to redirect the base URL to our application
 from django.views.generic import RedirectView
+
 urlpatterns += [
-    path('', RedirectView.as_view(url='catalog/', permanent=True)),
+    path("", RedirectView.as_view(url="catalog/", permanent=True)),
 ]
 
 # Use static() to add url mapping to serve static files during development (only)
@@ -38,3 +39,41 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Add Django site authentication urls (for login, logout, password management)
+
+urlpatterns += [
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/login/", include("django.contrib.auth.urls"), name="login"),
+    path("accounts/logout/", include("django.contrib.auth.urls"), name="logout"),
+    path(
+        "accounts/password_change/",
+        include("django.contrib.auth.urls"),
+        name="password_change",
+    ),
+    path(
+        "accounts/password_change/done/",
+        include("django.contrib.auth.urls"),
+        name="password_change_done",
+    ),
+    path(
+        "accounts/password_reset/",
+        include("django.contrib.auth.urls"),
+        name="password_reset",
+    ),
+    path(
+        "accounts/password_reset/done/",
+        include("django.contrib.auth.urls"),
+        name="password_reset_done",
+    ),
+    path(
+        "accounts/reset/<uid64>/<token>",
+        include("django.contrib.auth.urls"),
+        name="password_reset_confirm",
+    ),
+    path(
+        "accounts/reset/done",
+        include("django.contrib.auth.urls"),
+        name="password_reset_complete",
+    ),
+]
