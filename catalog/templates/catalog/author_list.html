@@ -7,13 +7,17 @@
         {% for author in author_list %}
             <li>
                 <a href="{{ author.get_absolute_url }}">{{ author.last_name }}, {{ author.first_name }}</a>
+                {% if perms.catalog.can_edit_authors %}
                 (<a href="{% url 'author-update' author.pk %}">update</a>
                 ,<a href="{% url 'author-delete' author.pk %}">del</a>)
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
     {% else %}
         <p>There is no author in the database.</p>
     {% endif %}
+    {% if perms.catalog.can_edit_authors %}
     <a href="{% url 'author-create' %}">New Author</a>
+    {% endif %}
 {% endblock %}
