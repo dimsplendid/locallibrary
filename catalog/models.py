@@ -37,11 +37,9 @@ class Book(models.Model):
         unique=True,
         help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>',
     )
-    class Meta:
-        permissions = (
-            ("can_edit_book", "Edit books"),
-        )
 
+    class Meta:
+        permissions = (("can_edit_book", "Edit books"),)
 
     # ManyToManyField used because genre can contain many books. Books can cover many genres.
     # Genre class has already been defined so we can specify the object above.
@@ -102,9 +100,7 @@ class BookInstance(models.Model):
 
     class Meta:
         ordering = ["due_back"]
-        permissions = (
-            ("can_mark_returned", "Set book as returned"),
-        )
+        permissions = (("can_mark_returned", "Set book as returned"),)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -117,13 +113,11 @@ class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField("Died", null=True, blank=True)
+    date_of_death = models.DateField("died", null=True, blank=True)
 
     class Meta:
         ordering = ["last_name", "first_name"]
-        permissions = (
-            ("can_edit_authors", "Edit authors"),
-        )
+        permissions = (("can_edit_authors", "Edit authors"),)
 
     def get_absolute_url(self):
         """Returns the url to access a particular author instance."""
